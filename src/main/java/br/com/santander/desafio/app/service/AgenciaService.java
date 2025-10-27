@@ -21,7 +21,7 @@ public class AgenciaService {
     @Autowired
     private AgenciaRepository repository;
 
-    @Cacheable(value = "distancias", key = "#x + '-' + #y")
+    @Cacheable("consulta-distancia")
     public List<DistanciaDTO> consultarDistancias(double x, double y) {
         List<Agencia> agencias = repository.findAll();
         return agencias.stream()

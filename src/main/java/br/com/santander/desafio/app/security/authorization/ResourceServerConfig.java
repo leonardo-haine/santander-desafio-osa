@@ -14,7 +14,7 @@ public class ResourceServerConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http
-    	.csrf(csrf      ->          csrf.ignoringRequestMatchers("/h2-console/**")
+    	.csrf(csrf      ->          csrf.ignoringRequestMatchers("/h2-console/**").ignoringRequestMatchers("/actuator/**")
                 )
                 .headers(headers -> headers
                     .frameOptions(frame -> frame
@@ -26,9 +26,10 @@ public class ResourceServerConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
             		.requestMatchers("/h2-console/**").permitAll()
+            		.requestMatchers("/actuator/**").permitAll()
             	.requestMatchers("/desafio/**").authenticated()
             )
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())); // Enables JWT-based resource server
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
     
